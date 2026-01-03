@@ -15,5 +15,5 @@ COPY backend/ ./backend
 # Expose backend port
 EXPOSE 8000
 
-# Start the backend
-CMD ["node", "backend/server.js"]
+# Run seeder, then start server
+CMD ["sh", "-c", "npm run seeder && npm run start"]
