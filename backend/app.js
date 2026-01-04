@@ -24,6 +24,11 @@ const auth = require('./routes/auth')
 const order = require('./routes/order')
 const payment = require('./routes/payment')
 
+app.get('/api/test', (req, res) => {
+  res.json({ success: true, message: 'Backend is live!' });
+});
+
+
 app.use('/api/v1/',products);
 app.use('/api/v1/',auth);
 app.use('/api/v1/',order);
