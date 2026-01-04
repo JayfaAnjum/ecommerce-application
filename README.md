@@ -9,8 +9,4 @@ git clone https://github.com/your-username/your-project.git
 cd your-project
 
 
-- `bash` → optional, adds syntax highlighting.  
-- **Close the block** with triple backticks before starting the next section.  
-
----
 
