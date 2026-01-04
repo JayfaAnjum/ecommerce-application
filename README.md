@@ -22,6 +22,10 @@ SMTP_PASS=your_mailtrap_password
 docker-compose up --build
 Visit http://localhost
 
+## 2️⃣ Run Docker Compose
+
+```bash
+docker-compose up --build
 
 
 
