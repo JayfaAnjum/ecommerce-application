@@ -1,27 +1,25 @@
+const serverless = require('serverless-http');
 const app = require('./app');
-const path = require('path');
 const connectDatabase = require('./config/database');
 
-connectDatabase();
+let isDbConnected = false;
 
-const server = app.listen(process.env.PORT, '0.0.0.0', () => {
-    console.log(
-        `My Server listening on port ${process.env.PORT} in ${process.env.NODE_ENV}`
-    );
-});
+// Handler function for Vercel
+const handler = async (req, res) => {
+  try {
+    // Connect to DB only once
+    if (!isDbConnected) {
+      await connectDatabase();
+      isDbConnected = true;
+      console.log('Database connected');
+    }
 
-process.on('unhandledRejection', (err) => {
-    console.log(`Error: ${err.message}`);
-    console.log('Shutting down the server due to unhandled rejection');
-    server.close(() => {
-        process.exit(1);
-    });
-});
+    // Pass the request to Express app
+    return app(req, res);
+  } catch (err) {
+    console.error('Error in handler:', err);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+};
 
-process.on('uncaughtException', (err) => {
-    console.log(`Error: ${err.message}`);
-    console.log('Shutting down the server due to uncaught exception');
-    server.close(() => {
-        process.exit(1);
-    });
-});
+module.exports = serverless(handler);
