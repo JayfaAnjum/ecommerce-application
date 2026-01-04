@@ -14,20 +14,3 @@ cd your-project
 
 ---
 
-## 5️⃣ Add environment variables in another box
-
-Start a **new code block** for `.env` variables:
-
-```markdown
-## 2️⃣ Set Up Environment Variables
-
-Create a `.env` file in the project root:
-
-```env
-# Stripe
-STRIPE_API_KEY=your_stripe_api_key
-STRIPE_SECRET_KEY=your_stripe_secret_key
-
-# SMTP (Mailtrap)
-SMTP_USER=your_mailtrap_username
-SMTP_PASS=your_mailtrap_password
