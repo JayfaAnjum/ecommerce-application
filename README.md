@@ -7,3 +7,11 @@ This project is fully Dockerized. To run it locally:
 ```bash
 git clone https://github.com/your-username/your-project.git
 cd your-project
+
+# Stripe
+STRIPE_API_KEY=your_stripe_api_key
+STRIPE_SECRET_KEY=your_stripe_secret_key
+
+# SMTP (Mailtrap)
+SMTP_USER=your_mailtrap_username
+SMTP_PASS=your_mailtrap_password
