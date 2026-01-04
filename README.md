@@ -15,3 +15,14 @@ STRIPE_SECRET_KEY=your_stripe_secret_key
 # SMTP (Mailtrap)
 SMTP_USER=your_mailtrap_username
 SMTP_PASS=your_mailtrap_password
+
+
+2.**Run Docker Compose**
+
+docker-compose up --build
+Visit http://localhost
+
+
+
+
+
