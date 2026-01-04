@@ -2,38 +2,33 @@
 
 This project is fully Dockerized. You can run it locally using Docker Compose.
 
-  1. Clone the Repository
+---
 
+## 1️⃣ Clone the Repository
+
+```bash
 git clone https://github.com/your-username/your-project.git
 cd your-project
 
-
-2.Set Up Environment Variables
-
-
-Stripe
+ 2️⃣ Set Up Environment Variables
+# Stripe
 STRIPE_API_KEY=your_stripe_api_key
 STRIPE_SECRET_KEY=your_stripe_secret_key
 
-SMTP (Mailtrap)
+# SMTP (Mailtrap)
 SMTP_USER=your_mailtrap_username
 SMTP_PASS=your_mailtrap_password
 
 
-3.Run Docker Compose
+3️⃣ Run Docker Compose
 
 docker-compose up --build
+Open your browser and visit: http://localhost
 
-Open your browser and visit: http://localhost:
-
-4.Note: If you make changes to the .env file, restart the containers:
+4️⃣ Notes
 
 docker-compose down
 docker-compose up --build
-
-
-
-
 
 
 
