@@ -30,5 +30,9 @@ Open your browser and visit: http://localhost
 docker-compose down
 docker-compose up --build
 
+## to login as admin use
+username = admin@example.com
+password = 123456
+
 
 
