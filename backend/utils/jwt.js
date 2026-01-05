@@ -1,25 +1,25 @@
 const sendToken = (user, statusCode, res) => {
+  const token = user.getJwtToken();
 
-    //Creating JWT Token
-    const token = user.getJwtToken();
+  const options = {
+    expires: new Date(
+      Date.now() + process.env.COOKIE_EXPIRES_TIME * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
 
-    //setting cookies 
-    const options = {
-        expires: new Date(
-                Date.now() + process.env.COOKIE_EXPIRES_TIME  * 24 * 60 * 60 * 1000 
-            ),
-        httpOnly: true,
-    }
+    // 🔴 REQUIRED FOR VERCEL + RAILWAY
+    secure: true,          // HTTPS only
+    sameSite: "none",      // allow cross-site cookies
+  };
 
-    res.status(statusCode)
-    .cookie('token', token, options)
+  res
+    .status(statusCode)
+    .cookie("token", token, options)
     .json({
-        success: true,
-        token,
-        user
-    })
-
-
-}
+      success: true,
+      token, // keep this (important)
+      user,
+    });
+};
 
 module.exports = sendToken;
