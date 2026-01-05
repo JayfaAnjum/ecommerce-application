@@ -20,7 +20,7 @@ services:
      - uploads_data:/app/backend/uploads
     
     ports:
-     - "8000:8000"
+     - "8080:8080"
     depends_on:
      - mongo
 
