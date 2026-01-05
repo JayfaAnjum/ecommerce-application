@@ -11,7 +11,7 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
 
     let avatar;
     
-    let BASE_URL = process.env.BACKEND_URL;
+    let BASE_URL = "https://truthful-presence-production.up.railway.app";
     if(process.env.NODE_ENV === "production"){
         BASE_URL = `${req.protocol}://${req.get('host')}`
     }
