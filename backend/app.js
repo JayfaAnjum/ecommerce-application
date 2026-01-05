@@ -25,7 +25,7 @@ const order = require('./routes/order')
 const payment = require('./routes/payment')
 
 app.get('/api/test', (req, res) => {
-  res.json({ success: true, message: 'Backend is live!' });
+  res.json({ success: true, message: 'Backend is live new new ew!' });
 });
 
 
