@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const connectDatabase = () => {
     mongoose.connect(
-        process.env.DB_LOCAL_URI,
+        "mongodb+srv://dua:dua@cluster0.n4zfpkd.mongodb.net/?appName=Cluster0",
         {
             useNewUrlParser: true,
             useUnifiedTopology: true,
