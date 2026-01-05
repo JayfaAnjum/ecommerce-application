@@ -11,7 +11,7 @@ dotenv.config({path:path.join(__dirname,"config/config.env")});
 
 
 app.use(cors({
-    origin: 'http://localhost', 
+    origin: 'https://ecommerce-application-96om.vercel.app', 
     credentials: true,               
 }));
 
