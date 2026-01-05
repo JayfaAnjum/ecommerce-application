@@ -7,7 +7,9 @@ const sendToken = (user, statusCode, res) => {
     ),
     httpOnly: true,
 
-        
+    // 🔴 REQUIRED FOR VERCEL + RAILWAY
+    secure: true,          // HTTPS only
+    sameSite: "none",      // allow cross-site cookies
   };
 
   res
