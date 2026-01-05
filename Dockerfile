@@ -13,7 +13,7 @@ RUN npm install --omit=dev
 COPY backend/ ./backend
 
 # Expose backend port
-EXPOSE 8080
+EXPOSE 5000
 
 # Run seeder, then start server
 CMD ["sh", "-c", "npm run seeder && npm run start"]
