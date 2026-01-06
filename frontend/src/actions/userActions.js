@@ -91,16 +91,15 @@ export const loadUser =  async (dispatch) => {
 
 }
 
-export const logout =  async (dispatch) => {
-
+export const logout = async (dispatch) => {
     try {
-        await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/logout`,{withCredentials: true});
-        dispatch(logoutSuccess())
+        await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/logout`, { withCredentials: true });
+        dispatch(logoutSuccess());
     } catch (error) {
-        dispatch(logoutFail)
+        dispatch(logoutFail(error.response?.data?.message || error.message));
     }
-
 }
+
 
 export const updateProfile = (userData) => async (dispatch) => {
 
