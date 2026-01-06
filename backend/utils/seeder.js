@@ -22,15 +22,8 @@ const seedProductsAndAdmin = async () => {
     console.log('All products added!');
 
     // Create a sample admin user
-    const adminUser = new User({
-      name: 'Admin User',
-      email: 'admin@example.com',
-      password: "123456", 
-      role: "admin",
-    });
-
-    await adminUser.save();
-    console.log('Admin user created!');
+    
+    
 
   } catch (error) {
     console.log(error.message);
