@@ -55,18 +55,21 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
 })
 
 //Logout - /api/v1/logout
-exports.logoutUser = (req, res, next) => {
-        res.cookie('token',null, {
-            expires: new Date(Date.now()),
-            httpOnly: true
-        })
-        .status(200)
-        .json({
-            success: true,
-            message: "Loggedout"
-        })
+exports.logoutUser = (req, res) => {
+  res.cookie("token", "", {
+    expires: new Date(0),
+    httpOnly: true,
+    secure: true,       // MUST match login cookie
+    sameSite: "None",   // MUST match login cookie
+    path: "/",          // MUST match login cookie
+  });
 
-}
+  res.status(200).json({
+    success: true,
+    message: "Logged out successfully",
+  });
+};
+
 
 //Forgot Password - /api/v1/password/forgot
 exports.forgotPassword = catchAsyncError( async (req, res, next)=>{
