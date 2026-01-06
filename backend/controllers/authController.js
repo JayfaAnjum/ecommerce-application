@@ -57,7 +57,7 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
 //Logout - /api/v1/logout
 exports.logoutUser = (req, res) => {
   res.cookie("token", "", {
-    expires: new Date(0),
+    maxAge: 0,          // Cookie will expire immediately
     httpOnly: true,
     secure: true,       // MUST match login cookie
     sameSite: "None",   // MUST match login cookie
