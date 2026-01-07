@@ -78,7 +78,7 @@ export const register = (userData) => async (dispatch) => {
 
 }
 
-export const loadUser =  async (dispatch) => {
+export const loadUser =()=> async (dispatch) => {
 
     try {
         dispatch(loadUserRequest())
@@ -88,6 +88,7 @@ export const loadUser =  async (dispatch) => {
         dispatch(loadUserSuccess(data))
     } catch (error) {
         dispatch(loadUserFail(error.response.data.message))
+        return;
     }
 
 }
