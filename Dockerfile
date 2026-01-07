@@ -16,5 +16,5 @@ COPY backend/ ./backend
 EXPOSE 5000
 
 # Run seeder, then start server
-#CMD ["sh", "-c", "npm run seeder && npm run start"]
-CMD ["npm", "run", "start"]
+CMD ["sh", "-c", "npm run seeder && npm run start"]
+#CMD ["npm", "run", "start"]
