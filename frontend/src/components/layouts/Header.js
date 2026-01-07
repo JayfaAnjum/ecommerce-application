@@ -15,10 +15,10 @@ export default function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const logoutHandler = () => {
-    dispatch(logout());
-    navigate('/login'); // go to login page
-  }
+  const logoutHandler = async () => {
+    await dispatch(logout()); // calls API and resets state
+    navigate('/login');       // go to login page
+};
 
   return (
     <nav className="navbar row">
