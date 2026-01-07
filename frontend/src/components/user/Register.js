@@ -100,14 +100,17 @@ export default function Register() {
 
                     <div className="form-group">
                         <label htmlFor="password_field">Password</label>
-                        <input
-                            type="password"
-                            id="password_field"
-                            name="password"
-                            className="form-control"
-                            onChange={onChange}
-                            required
-                        />
+                       <input
+  type="password"
+  id="password_field"
+  name="password"
+  className="form-control"
+  onChange={onChange}
+  required
+  minLength={8}
+  title="Password must be at least 8 characters"
+/>
+
                     </div>
 
                     <div className="form-group">
