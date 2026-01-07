@@ -93,10 +93,22 @@ export default function UpdateUser () {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="category_field">Role</label>
-                                <select disabled={user._id === authUser._id } value={role} onChange={e => setRole(e.target.value)} className="form-control" id="category_field">
+                                {/* <select disabled={user._id === authUser._id } value={role} onChange={e => setRole(e.target.value)} className="form-control" id="category_field">
                                     <option value="admin">Admin</option>
                                     <option value="user">User</option>
-                                </select>
+                                </select> */}
+
+                                <select 
+    disabled={user?._id === authUser?._id} 
+    value={role || 'user'} 
+    onChange={e => setRole(e.target.value)} 
+    className="form-control" 
+    id="category_field"
+>
+    <option value="admin">Admin</option>
+    <option value="user">User</option>
+</select>
+
                             </div>
                             <button
                             id="login_button"

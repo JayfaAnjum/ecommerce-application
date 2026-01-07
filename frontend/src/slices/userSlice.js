@@ -14,7 +14,7 @@ const userSlice = createSlice({
         usersRequest(state, action){
             return {
                 ...state,
-                user:null,
+               
                 loading: true
             }
         },
