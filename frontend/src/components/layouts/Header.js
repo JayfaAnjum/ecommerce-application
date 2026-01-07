@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Search from './Search';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dropdown, Image } from 'react-bootstrap';
-import { logoutSuccess } from '../../slices/authSlice';
+import { logout } from '../../actions/userActions';
+
 
 export default function Header() {
   const isAuthenticated = useSelector(state => state.authState.isAuthenticated);
@@ -15,7 +16,7 @@ export default function Header() {
   const navigate = useNavigate();
 
   const logoutHandler = () => {
-    dispatch(logoutSuccess());
+    dispatch(logout());
     navigate('/login'); // go to login page
   }
 
