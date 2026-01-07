@@ -5,7 +5,7 @@ const userSlice = createSlice({
     name: 'user',
     initialState: {
         loading: false,
-        user: {},
+        user: null,
         users: [],
         isUserUpdated: false,
         isUserDeleted: false
@@ -14,6 +14,7 @@ const userSlice = createSlice({
         usersRequest(state, action){
             return {
                 ...state,
+                user:null,
                 loading: true
             }
         },
@@ -28,6 +29,7 @@ const userSlice = createSlice({
             return {
                 ...state,
                 loading: false,
+                user:null,
                 error:  action.payload
             }
         },
@@ -48,6 +50,7 @@ const userSlice = createSlice({
             return {
                 ...state,
                 loading: false,
+                user:null,
                 error:  action.payload
             }
         },
