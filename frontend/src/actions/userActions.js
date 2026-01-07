@@ -91,16 +91,14 @@ export const loadUser =  async (dispatch) => {
 
 }
 
-export const logout = async (dispatch) => {
+export const logout = () => async (dispatch) => {
     try {
         await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/logout`, { withCredentials: true });
-        dispatch(logoutSuccess());
+        dispatch(logoutSuccess()); // clears Redux state
     } catch (error) {
         dispatch(logoutFail(error.response?.data?.message || error.message));
     }
-}
-
-
+};
 
 export const updateProfile = (userData) => async (dispatch) => {
 
