@@ -1,164 +1,163 @@
-import { useElements, useStripe } from "@stripe/react-stripe-js";
+import { useElements, useStripe } from "@stripe/react-stripe-js"
 import { CardNumberElement, CardExpiryElement, CardCvcElement } from "@stripe/react-stripe-js";
 import axios from "axios";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom'
 import { toast } from "react-toastify";
 import { orderCompleted } from "../../slices/cartSlice";
-import { validateShipping } from '../cart/Shipping';
-import { createOrder } from '../../actions/orderActions';
+import {validateShipping} from '../cart/Shipping';
+import {createOrder} from '../../actions/orderActions'
 import { clearError as clearOrderError } from "../../slices/orderSlice";
 
 export default function Payment() {
     const stripe = useStripe();
     const elements = useElements();
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     const navigate = useNavigate();
-
-    // ✅ Safe fallback for orderInfo
-    const orderInfo = JSON.parse(sessionStorage.getItem('orderInfo')) || {};
-    const { user } = useSelector(state => state.authState);
-    const { items: cartItems, shippingInfo } = useSelector(state => state.cartState);
-    const { error: orderError } = useSelector(state => state.orderState);
-
-    // ✅ Build order object
-    const order = {
-        orderItems: cartItems,
-        shippingInfo,
-        itemsPrice: orderInfo.itemsPrice || 0,
-        shippingPrice: orderInfo.shippingPrice || 0,
-        taxPrice: orderInfo.taxPrice || 0,
-        totalPrice: orderInfo.totalPrice || 0
-    };
+    const orderInfo = JSON.parse(sessionStorage.getItem('orderInfo'))
+    const { user } = useSelector(state => state.authState)
+    const {items:cartItems, shippingInfo } = useSelector(state => state.cartState)
+    const { error:orderError } = useSelector(state => state.orderState)
 
     const paymentData = {
-        amount: Math.round(order.totalPrice * 100), // in cents
-        shipping: {
-            name: user?.name,
-            address: {
-                city: shippingInfo?.city,
-                postal_code: shippingInfo?.postalCode,
-                country: shippingInfo?.country,
-                state: shippingInfo?.state,
-                line1: shippingInfo?.address
+        amount : Math.round( orderInfo.totalPrice * 100),
+        shipping :{
+            name: user.name,
+            address:{
+                city: shippingInfo.city,
+                postal_code : shippingInfo.postalCode,
+                country: shippingInfo.country,
+                state: shippingInfo.state,
+                line1 : shippingInfo.address
             },
-            phone: shippingInfo?.phoneNo
+            phone: shippingInfo.phoneNo
         }
-    };
+    }
+
+    const order = {
+        orderItems: cartItems,
+        shippingInfo
+    }
+
+    if(orderInfo) {
+        order.itemsPrice = orderInfo.itemsPrice
+        order.shippingPrice = orderInfo.shippingPrice
+        order.taxPrice = orderInfo.taxPrice
+        order.totalPrice = orderInfo.totalPrice
+        
+    }
 
     useEffect(() => {
-        validateShipping(shippingInfo, navigate);
-
-        if (orderError) {
+        validateShipping(shippingInfo, navigate)
+        if(orderError) {
             toast(orderError, {
-                type: 'error',
                 position: toast.POSITION.BOTTOM_CENTER,
-                onOpen: () => dispatch(clearOrderError())
-            });
+                type: 'error',
+                onOpen: ()=> { dispatch(clearOrderError()) }
+            })
+            return
         }
-    }, [orderError, shippingInfo, navigate, dispatch]);
+
+    },[])
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        const payBtn = document.querySelector('#pay_btn');
-        payBtn.disabled = true;
-
-        if (!stripe || !elements) {
-            toast('Stripe has not loaded yet.', { type: 'warning' });
-            payBtn.disabled = false;
-            return;
-        }
-
+        document.querySelector('#pay_btn').disabled = true;
         try {
-            // 1️⃣ Create PaymentIntent
-            const { data } = await axios.post(
-                `${process.env.REACT_APP_API_URL}/api/v1/payment/process`,
-                paymentData,
-                { withCredentials: true }
-            );
-
-            const clientSecret = data.client_secret;
-
-            // 2️⃣ Confirm payment
+            const {data} = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/payment/process`, paymentData,{ withCredentials: true})
+            const clientSecret = data.client_secret
             const result = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: {
                     card: elements.getElement(CardNumberElement),
                     billing_details: {
-                        name: user?.name,
-                        email: user?.email
+                        name: user.name,
+                        email: user.email
                     }
                 }
-            });
+            })
 
-            // 3️⃣ Handle errors
-            if (result.error) {
-                toast(result.error.message, { type: 'error', position: toast.POSITION.BOTTOM_CENTER });
-                payBtn.disabled = false;
-                return;
+            if(result.error){
+                toast(result.error.message, {
+                    type: 'error',
+                    position: toast.POSITION.BOTTOM_CENTER
+                })
+                document.querySelector('#pay_btn').disabled = false;
+            }else{
+                if((await result).paymentIntent.status === 'succeeded') {
+                    toast('Payment Success!', {
+                        type: 'success',
+                        position: toast.POSITION.BOTTOM_CENTER
+                    })
+                    order.paymentInfo = {
+                        id: result.paymentIntent.id,
+                        status: result.paymentIntent.status
+                    }
+                    dispatch(orderCompleted())
+                    dispatch(createOrder(order))
+
+                    navigate('/order/success')
+                }else{
+                    toast('Please Try again!', {
+                        type: 'warning',
+                        position: toast.POSITION.BOTTOM_CENTER
+                    })
+                }
             }
 
-            // 4️⃣ Payment succeeded
-            if (result.paymentIntent.status === 'succeeded') {
-                toast('Payment Success!', { type: 'success', position: toast.POSITION.BOTTOM_CENTER });
-
-                // Add payment info to order
-                order.paymentInfo = {
-                    id: result.paymentIntent.id,
-                    status: result.paymentIntent.status
-                };
-
-                // 5️⃣ Dispatch Redux actions
-                dispatch(orderCompleted());
-                await dispatch(createOrder(order));
-
-                // 6️⃣ Navigate to success page
-                navigate('/order/success');
-            } else {
-                toast('Payment not completed. Please try again!', { type: 'warning', position: toast.POSITION.BOTTOM_CENTER });
-                payBtn.disabled = false;
-            }
 
         } catch (error) {
-            toast(error.response?.data?.message || 'Payment failed. Please try again.', {
-                type: 'error',
-                position: toast.POSITION.BOTTOM_CENTER
-            });
-            payBtn.disabled = false;
+            
         }
-    };
+    }
 
-    return (
+
+     return (
         <div className="row wrapper">
             <div className="col-10 col-lg-5">
                 <form onSubmit={submitHandler} className="shadow-lg">
                     <h1 className="mb-4">Card Info</h1>
-
                     <div className="form-group">
-                        <label htmlFor="card_num_field">Card Number</label>
-                        <CardNumberElement id="card_num_field" className="form-control" />
+                    <label htmlFor="card_num_field">Card Number</label>
+                    <CardNumberElement
+                        type="text"
+                        id="card_num_field"
+                        className="form-control"
+                       
+                    />
                     </div>
-
+                    
                     <div className="form-group">
-                        <label htmlFor="card_exp_field">Card Expiry</label>
-                        <CardExpiryElement id="card_exp_field" className="form-control" />
+                    <label htmlFor="card_exp_field">Card Expiry</label>
+                    <CardExpiryElement
+                        type="text"
+                        id="card_exp_field"
+                        className="form-control"
+                       
+                    />
                     </div>
-
+                    
                     <div className="form-group">
-                        <label htmlFor="card_cvc_field">Card CVC</label>
-                        <CardCvcElement id="card_cvc_field" className="form-control" />
+                    <label htmlFor="card_cvc_field">Card CVC</label>
+                    <CardCvcElement
+                        type="text"
+                        id="card_cvc_field"
+                        className="form-control"
+                        value=""
+                    />
                     </div>
-
+        
+                
                     <button
-                        id="pay_btn"
-                        type="submit"
-                        className="btn btn-block py-3"
-                        disabled={!order.totalPrice} // disable if no order
+                    id="pay_btn"
+                    type="submit"
+                    className="btn btn-block py-3"
                     >
-                        Pay - {`$${order.totalPrice}`}
+                    Pay - { ` $${orderInfo && orderInfo.totalPrice}` }
                     </button>
+        
                 </form>
             </div>
         </div>
-    );
+    )
 }
