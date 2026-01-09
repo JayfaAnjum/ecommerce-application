@@ -4,7 +4,7 @@ import axios from 'axios';
 export const createOrder = order => async(dispatch) => {
     try {
        dispatch(createOrderRequest())
-       const {data} = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/order/new`,{withCredentials: true}, order)
+       const {data} = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/order/new`, order,{withCredentials: true})
        dispatch(createOrderSuccess(data))
     } catch (error) {
         dispatch(createOrderFail(error.response.data.message))
