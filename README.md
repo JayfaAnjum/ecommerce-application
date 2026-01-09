@@ -9,11 +9,21 @@ password = 12345678
 
 # My Dockerized Project
 
-This project is fully Dockerized. You can run it locally also using Docker Compose.
+This project is fully Dockerized as well. You can run it locally also using Docker Compose.
 
 ---
 
 ## 1️⃣ Clone the Repository
+  
+  Live Link
+https://ecommerce-application-96om.vercel.app
+
+ to login as admin use
+username = admin@example.com
+password = 12345678
+
+
+
 
 ```bash
 git clone https://github.com/your-username/your-project.git
