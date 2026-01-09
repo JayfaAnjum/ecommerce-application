@@ -1,6 +1,15 @@
+# Live Link
+
+https://ecommerce-application-96om.vercel.app
+
+## to login as admin use
+username = admin@example.com
+password = 12345678
+
+
 # My Dockerized Project
 
-This project is fully Dockerized. You can run it locally using Docker Compose.
+This project is fully Dockerized. You can run it locally also using Docker Compose.
 
 ---
 
@@ -32,7 +41,7 @@ docker-compose up --build
 
 ## to login as admin use
 username = admin@example.com
-password = 123456
+password = 12345678
 
 
 
