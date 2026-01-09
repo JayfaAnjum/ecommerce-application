@@ -1,17 +1,19 @@
-## Live Link
+# 🚀 My Dockerized E-commerce Project
 
-https://ecommerce-application-96om.vercel.app
+**Live Link:** [https://ecommerce-application-96om.vercel.app](https://ecommerce-application-96om.vercel.app)
 
-## to login as admin use
-username = admin@example.com
-password = 12345678
-
-
-# My Dockerized Project
-
-This project is fully Dockerized as well. You can run it locally also using Docker Compose.
+**Admin Login:**
+- Username: `admin@example.com`
+- Password: `12345678`
 
 ---
+
+## 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/your-username/your-project.git
+cd your-project
+
 
 ## 1️⃣ Clone the Repository
 
