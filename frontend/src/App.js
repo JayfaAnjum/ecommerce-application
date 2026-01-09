@@ -42,9 +42,9 @@ import ReviewList from './components/admin/ReviewList';
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("")
   useEffect(() => {
-    store.dispatch(loadUser)
+    store.dispatch(loadUser())
     async function getStripeApiKey(){
-      const {data} = await axios.get('/api/v1/stripeapi')
+      const {data} = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/stripeapi`)
       setStripeApiKey(data.stripeApiKey)
     }
     getStripeApiKey()
