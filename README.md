@@ -15,27 +15,6 @@ git clone https://github.com/your-username/your-project.git
 cd your-project
 
 
-## 1️⃣ Clone the Repository
-
-
-
-
-## Live Link
-  
-  Live Link
-https://ecommerce-application-96om.vercel.app
-
- to login as admin use
-username = admin@example.com
-password = 12345678
-
-
-
-
-```bash
-git clone https://github.com/your-username/your-project.git
-cd your-project
-
  2️⃣ Set Up Environment Variables
 # Stripe
 STRIPE_API_KEY=your_stripe_api_key
