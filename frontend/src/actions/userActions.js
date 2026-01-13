@@ -50,6 +50,7 @@ export const login = (email, password) => async (dispatch) => {
             dispatch(loginSuccess(data))
         } catch (error) {
             dispatch(loginFail(error.response.data.message))
+            return;
         }
 
 }
