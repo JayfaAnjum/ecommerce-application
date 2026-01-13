@@ -19,20 +19,34 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
         dispatch(login(email, password))
     }
 
-    useEffect(() => {
-        if(isAuthenticated) {
-            navigate(redirect)
-        }
+    // useEffect(() => {
+    //     if(isAuthenticated) {
+    //         navigate(redirect)
+    //     }
 
-        if(error)  {
-            toast(error, {
-                position: toast.POSITION.BOTTOM_CENTER,
-                type: 'error',
-                onOpen: ()=> { dispatch(clearAuthError) }
-            })
-            return
-        }
-    },[error, isAuthenticated, dispatch, navigate])
+    //     if(error)  {
+    //         toast(error, {
+    //             position: toast.POSITION.BOTTOM_CENTER,
+    //             type: 'error',
+    //             onOpen: ()=> { dispatch(clearAuthError) }
+    //         })
+    //         return
+    //     }
+    // },[error, isAuthenticated, dispatch, navigate])
+
+    useEffect(() => {
+    if(isAuthenticated) {
+        navigate(redirect)
+    }
+
+    if(error)  {
+        toast.error(error, {
+            position: toast.POSITION.BOTTOM_CENTER,
+        });
+        dispatch(clearAuthError()); // ✅ CALL the function
+    }
+}, [error, isAuthenticated, dispatch, navigate, redirect]);
+
 
     return (
         <Fragment>
