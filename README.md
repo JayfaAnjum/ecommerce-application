@@ -1,6 +1,10 @@
-# My Dockerized Project
+# 🚀 My Dockerized E-commerce Project
 
-This project is fully Dockerized. You can run it locally using Docker Compose.
+**Live Link:** [https://ecommerce-application-96om.vercel.app](https://ecommerce-application-96om.vercel.app)
+
+**Admin Login:**
+- Username: `admin@example.com`
+- Password: `12345678`
 
 ---
 
@@ -9,6 +13,7 @@ This project is fully Dockerized. You can run it locally using Docker Compose.
 ```bash
 git clone https://github.com/your-username/your-project.git
 cd your-project
+
 
  2️⃣ Set Up Environment Variables
 # Stripe
@@ -32,7 +37,7 @@ docker-compose up --build
 
 ## to login as admin use
 username = admin@example.com
-password = 123456
+password = 12345678
 
 
 
