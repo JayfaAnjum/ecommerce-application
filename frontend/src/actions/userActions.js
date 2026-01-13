@@ -74,6 +74,7 @@ export const register = (userData) => async (dispatch) => {
         dispatch(registerSuccess(data))
     } catch (error) {
         dispatch(registerFail(error.response.data.message))
+        return;
     }
 
 }
